@@ -1,20 +1,15 @@
 {% block content %}
 
 <div>
-    {% for customer in customers %}
+    {% for patient in patients %}
     <div>
-        <a href="{{ url_for('blueprint.customer', id=customer.id)}}">
-            <b>{{ customer.id }}</b>.{{ customer.name }} {{ customer.surname }}
+        <a href="{{ url_for('blueprint.patient', id=patient.id)}}">
+            <b>{{ patient.id }}</b>.{{ patient.name }} {{ patient.surname }}
         </a>
-        <a href="{{ url_for('blueprint.customer_edit', id=customer.id)}}">
-            <b>Edit {{ customer.id }} </b>
-        </a>
-        <a href="{{ url_for('blueprint.customer_delete', id=customer.id)}}">
-            <b>Delete {{ customer.id }} </b>
-        </a>
+
     </div>
     {% endfor %}
     <hr>
-    <a href="/customers/add">Add new customer</a>
+    <a href="/patients/add">Add new patient</a>
 </div>
 {% endblock %}

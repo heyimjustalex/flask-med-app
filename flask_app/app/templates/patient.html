@@ -1,0 +1,15 @@
+{% block content %}
+
+<h1>KLIENT ID: {{ patient.id}} </h1>
+<h2> MAIL KLIENTA:{{ patient.email }}</h2>
+
+<div>
+    <div>
+        <b>Imie: {{patient.name }}</b>
+        <b>Nazwisko: {{patient.surname }} </b>
+
+    </div>
+    <hr>
+    <a href="/patients">Back to patients</a>
+</div>
+{% endblock %}

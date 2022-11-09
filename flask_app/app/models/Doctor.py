@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship
 
 class Doctor(db.Model):
     __tablename__ = "Doctor"
-
-    id_pesel_num = db.Column(db.String(128), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
+    pesel = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(128), unique=False, nullable=True)
     surname = db.Column(db.String(128), unique=False, nullable=True)
     email = db.Column(db.String(128), unique=False, nullable=True)
@@ -18,7 +18,7 @@ class Doctor(db.Model):
 
     def __init__(
         self,
-        id_pesel_num,
+        pesel,
         name,
         surname,
         email,
@@ -28,7 +28,7 @@ class Doctor(db.Model):
         disablity,
         medical_specialization,
     ):
-        self.id_pesel_num = id_pesel_num
+        self.pesel = pesel
         self.name = name
         self.surname = surname
         self.email = email

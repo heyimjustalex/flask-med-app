@@ -10,7 +10,7 @@ from app.models.Doctor import Doctor
 from app.models.Medical_interview import Medical_interview
 from datetime import datetime
 
-# from app.routes.routes import blueprint
+from app.routes.routes import blueprint
 
 
 def setup_database():
@@ -23,7 +23,7 @@ def setup_database():
 
         db.session.add(
             Patient(
-                id_pesel_num="123231312",
+                pesel="111",
                 name="jack",
                 surname="sparrow",
                 email="asd@asd.pl",
@@ -36,7 +36,7 @@ def setup_database():
         )
         db.session.add(
             Patient(
-                id_pesel_num="132131231",
+                pesel="222",
                 name="jack2",
                 surname="sparrow2",
                 email="asd2@asd.pl",
@@ -51,12 +51,12 @@ def setup_database():
 
         db.session.add(
             Patient(
-                id_pesel_num="132132344",
+                pesel="333",
                 name="jack3",
                 surname="sparrow3",
                 email="asd3@asd.pl",
                 phone_num="711232312",
-                born=datetime.strpdate("May 12 2015", "%b %d %Y"),
+                born=datetime.strptime("May 12 2015", "%b %d %Y"),
                 address="asdplplplpl",
                 disablity=0,
                 medical_offer="test2",
@@ -65,12 +65,12 @@ def setup_database():
 
         db.session.add(
             Doctor(
-                id_pesel_num="1233132344",
+                pesel="1111",
                 name="jack3Doctor",
                 surname="sparrow3Doctor",
                 email="asd4@asd.pl",
                 phone_num="7asd232312",
-                born=datetime.strpdate("May 13 2015", "%b %d %Y"),
+                born=datetime.strptime("May 13 2015", "%b %d %Y"),
                 address="asdplplplpl",
                 disablity=0,
                 medical_specialization="cardio",
@@ -79,25 +79,77 @@ def setup_database():
 
         db.session.add(
             Doctor(
-                id_pesel_num="18932344",
+                pesel="2222",
                 name="jack4Doctor",
                 surname="sparrow34Doctor",
                 email="asd5@asd.pl",
                 phone_num="7aasgg232312",
-                born=datetime.strpdate("May 16 2015", "%b %d %Y"),
+                born=datetime.strptime("May 16 2015", "%b %d %Y"),
                 address="asdplplplpasssl",
                 disablity=1,
                 medical_specialization="dentist",
             )
         )
 
+        db.session.add(
+            Meeting(
+                id_doctor=1,
+                id_patient=1,
+                meeting_time=datetime.strptime("Jun 3 2006 1:33PM", "%b %d %Y %I:%M%p"),
+                meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
+            )
+        )
+        db.session.add(
+            Meeting(
+                id_doctor=1,
+                id_patient=1,
+                meeting_time=datetime.strptime("Jun 5 2006 1:33PM", "%b %d %Y %I:%M%p"),
+                meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
+            )
+        )
+
+        db.session.add(
+            Meeting(
+                id_doctor=1,
+                id_patient=3,
+                meeting_time=datetime.strptime("Jun 5 2004 2:33PM", "%b %d %Y %I:%M%p"),
+                meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
+            )
+        )
+
+        db.session.add(
+            Meeting(
+                id_doctor=2,
+                id_patient=1,
+                meeting_time=datetime.strptime("Jun 5 2005 3:33PM", "%b %d %Y %I:%M%p"),
+                meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
+            )
+        )
+
+        db.session.add(
+            Meeting(
+                id_doctor=2,
+                id_patient=3,
+                meeting_time=datetime.strptime("May 5 2005 3:33PM", "%b %d %Y %I:%M%p"),
+                meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
+            )
+        )
+
+        db.session.add(
+            Meeting(
+                id_doctor=2,
+                id_patient=3,
+                meeting_time=datetime.strptime("May 8 2009 3:33PM", "%b %d %Y %I:%M%p"),
+                meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
+            )
+        )
         db.session.commit()
 
 
 app = Flask(__name__, template_folder="app/templates")
 app.config.from_object("app.config.Config")
 db.init_app(app)
-# app.register_blueprint(blueprint, url_prefix="/")
+app.register_blueprint(blueprint, url_prefix="/")
 migrate = Migrate(app, db)
 setup_database()
 
