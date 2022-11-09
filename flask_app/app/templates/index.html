@@ -6,6 +6,12 @@
         <a href="{{ url_for('blueprint.patient', id=patient.id)}}">
             <b>{{ patient.id }}</b>.{{ patient.name }} {{ patient.surname }}
         </a>
+        <a href="{{ url_for('blueprint.patient_edit', id=patient.id)}}">
+            <b>Edit {{ patient.id }} </b>
+        </a>
+        <a href="{{ url_for('blueprint.patient_delete', id=patient.id)}}">
+            <b>Delete {{ patient.id }} </b>
+        </a>
 
     </div>
     {% endfor %}
