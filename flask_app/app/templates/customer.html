@@ -1,0 +1,15 @@
+{% block content %}
+
+<h1>KLIENT ID: {{ customer.id }} </h1>
+<h2> MAIL KLIENTA:{{ customer.email }}</h2>
+
+<div>
+    <div>
+        <b>Imie: {{customer.name }}</b>
+        <b>Nazwisko: {{customer.surname }} </b>
+        <b>Wiek: {{customer.age }} </b>
+    </div>
+    <hr>
+    <a href="/customers">Back to customers</a>
+</div>
+{% endblock %}
