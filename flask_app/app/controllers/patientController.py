@@ -4,7 +4,11 @@ from app.database.database import db
 from sqlalchemy import asc
 
 
+ROWS_PER_PAGE = 2
+
+
 def patients():
+
     if request.method == "POST":
         pesel = request.form["pesel"]
         name = request.form["name"]
@@ -31,7 +35,10 @@ def patients():
 
         return redirect(url_for("blueprint.patients"))
     else:
-        patients = Patient.query.order_by(asc("id"))
+        # patients = Patient.query.order_by(asc("id"))
+        page = request.args.get("page", 1, type=int)
+        patients = Patient.query.paginate(page=page, per_page=ROWS_PER_PAGE)
+
         return render_template("patients.html", patients=patients)
 
 

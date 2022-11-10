@@ -3,6 +3,8 @@ from app.models.Doctor import Doctor
 from app.database.database import db
 from sqlalchemy import asc
 
+ROWS_PER_PAGE = 2
+
 
 def doctors():
     if request.method == "POST":
@@ -31,7 +33,9 @@ def doctors():
 
         return redirect(url_for("blueprint.doctors"))
     else:
-        doctors = Doctor.query.order_by(asc("id"))
+        # doctors = Doctor.query.order_by(asc("id"))
+        page = request.args.get("page", 1, type=int)
+        doctors = Doctor.query.paginate(page=page, per_page=ROWS_PER_PAGE)
         return render_template("doctors.html", doctors=doctors)
 
 
