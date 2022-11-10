@@ -35,7 +35,7 @@ def patients():
 
         return redirect(url_for("blueprint.patients"))
     else:
-        # patients = Patient.query.order_by(asc("id"))
+
         page = request.args.get("page", 1, type=int)
         patients = Patient.query.paginate(page=page, per_page=ROWS_PER_PAGE)
 
@@ -43,6 +43,7 @@ def patients():
 
 
 def patient(id):
+
     patient = Patient.query.get_or_404(id)
     return render_template("patient.html", patient=patient)
 

@@ -143,6 +143,40 @@ def setup_database():
                 meeting_description="asopoassagpj poasjs ap s apjogsaposagpo",
             )
         )
+
+        db.session.add(
+            Medical_interview(
+                id_meeting=1,
+                hygiene="hyg1",
+                treatment_story="treatemenentt1",
+                interview_description="desc1",
+            )
+        )
+
+        db.session.add(
+            Medical_interview(
+                id_meeting=2,
+                hygiene="hyg2",
+                treatment_story="treatemenentt2",
+                interview_description="desc2",
+            )
+        )
+        db.session.add(
+            Medical_interview(
+                id_meeting=1,
+                hygiene="hyg33",
+                treatment_story="treatemenentt233",
+                interview_description="desc233",
+            )
+        )
+        db.session.add(
+            Medical_interview(
+                id_meeting=2,
+                hygiene="hyg24444",
+                treatment_story="treatemenentt244",
+                interview_description="desc244",
+            )
+        )
         db.session.commit()
 
 

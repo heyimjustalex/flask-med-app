@@ -13,7 +13,11 @@
             <b>Doctor name/surname -> {{ doctors[meeting.id_doctor].name }}/{{ doctors[meeting.id_doctor].surname }}
             </b>
         </a>| <br />
+        <hr>
 
+        <a href="{{ url_for('blueprint.meeting', id=meeting.id)}}">
+            <h2>ENTER MEETING <b>{{ meeting.id }}</b></h2>
+        </a>
         <hr> <br />
     </div>
     {% endfor %}

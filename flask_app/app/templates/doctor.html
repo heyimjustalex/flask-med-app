@@ -1,18 +1,18 @@
 {% block content %}
 
-<h1> Doktor ID: {{ doctor.id}} </h1>
-<h2> MAIL Doktora:{{ doctor.email }}</h2>
+<h1> Doctor ID: {{ doctor.id}} </h1>
+<h2> Doctor E-mail:{{ doctor.email }}</h2>
 
 <div>
     <div>
-        <b>Imie: {{doctor.name }}</b><br />
-        <b>Nazwisko: {{doctor.surname }} </b><br />
-        <b>Adres: {{doctor.address}} </b><br />
-        <b>Data urodzenia YYYY/MM/DD: {{doctor.born.year }}{{"-"}}{{doctor.born.month}}{{"-"}}{{doctor.born.day}}
+        <b>Name: {{doctor.name }}</b><br />
+        <b>Surname: {{doctor.surname }} </b><br />
+        <b>Address: {{doctor.address}} </b><br />
+        <b>Born: {{doctor.born.year }}{{"-"}}{{doctor.born.month}}{{"-"}}{{doctor.born.day}}
         </b><br />
-        <b>Niepełnosprawny: {{doctor.disability}} </b><br />
-        <b>Numer tel: {{doctor.phone_num}} </b><br />
-        <b>Specjalizacja: {{doctor.medical_specialization}} </b><br />
+        <b>Disability: {{doctor.disability}} </b><br />
+        <b>Phone: {{doctor.phone_num}} </b><br />
+        <b>Medical specialization: {{doctor.medical_specialization}} </b><br />
 
     </div>
     <hr>

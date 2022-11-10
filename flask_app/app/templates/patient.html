@@ -1,18 +1,18 @@
 {% block content %}
 
-<h1> Pacjent ID: {{ patient.id}} </h1>
-<h2> MAIL Pacjenta:{{ patient.email }}</h2>
+<h1> Patient ID: {{ patient.id}} </h1>
+<h2> Patient E-mail:{{ patient.email }}</h2>
 
 <div>
     <div>
-        <b>Imie: {{patient.name }}</b><br />
-        <b>Nazwisko: {{patient.surname }} </b><br />
-        <b>Adres: {{patient.address}} </b><br />
-        <b>Data urodzenia YYYY/MM/DD: {{patient.born.year }}{{"-"}}{{patient.born.month}}{{"-"}}{{patient.born.day}}
+        <b>Name: {{patient.name }}</b><br />
+        <b>Surname: {{patient.surname }} </b><br />
+        <b>Address: {{patient.address}} </b><br />
+        <b>Born: YYYY/MM/DD: {{patient.born.year }}{{"-"}}{{patient.born.month}}{{"-"}}{{patient.born.day}}
         </b><br />
-        <b>Niepełnosprawny: {{patient.disability}} </b><br />
-        <b>Numer tel: {{patient.phone_num}} </b><br />
-        <b>Pakiet medyczny: {{patient.medical_offer }} </b><br />
+        <b>Disability: {{patient.disability}} </b><br />
+        <b>Phone: {{patient.phone_num}} </b><br />
+        <b>Medical offer: {{patient.medical_offer }} </b><br />
 
     </div>
     <hr>
