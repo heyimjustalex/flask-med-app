@@ -2,6 +2,7 @@ from flask import Blueprint
 from app.controllers.mainController import *
 from app.controllers.patientController import *
 from app.controllers.doctorController import *
+from app.controllers.meetingController import *
 
 
 blueprint = Blueprint("blueprint", __name__)
@@ -18,3 +19,6 @@ blueprint.route("/doctors/<int:id>/")(doctor)
 blueprint.route("/doctors/add/")(doctor_add)
 blueprint.route("/doctors/<int:id>/edit/", methods=["GET", "POST"])(doctor_edit)
 blueprint.route("/doctors/<int:id>/delete/", methods=["GET", "POST"])(doctor_delete)
+
+blueprint.route("/meetings/", methods=["GET", "POST"])(meetings)
+blueprint.route("/meetings/<int:id>/")(meeting)
