@@ -1,0 +1,22 @@
+{% block content %}
+
+<div>
+    {% for doctor in doctors %}
+    <div>
+        <a href="{{ url_for('blueprint.doctor', id=doctor.id)}}">
+            <b>{{ doctor.id }}</b> | {{ doctor.name }} | {{ doctor.surname }}
+        </a> |
+        <a href="{{ url_for('blueprint.doctor_edit', id=doctor.id)}}">
+            <b>Edit {{ doctor.id }} </b>
+        </a> |
+        <a href="{{ url_for('blueprint.doctor_delete', id=doctor.id)}}">
+            <b>Delete {{ doctor.id }} </b>
+        </a>
+
+    </div>
+    {% endfor %}
+    <hr>
+    <a href="/doctors/add">Add new doctor</a> <br />
+    <a href="/">Back to /</a>
+</div>
+{% endblock %}

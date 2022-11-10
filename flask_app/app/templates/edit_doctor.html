@@ -1,6 +1,5 @@
 {% block content %}
-<h1> Add patient </h1>
-<form method="post" action="{{'/patients'}}">
+<form method="post">
 
     <label for="pesel">Pesel num</label>
     <input type="text" name="pesel"> <br />
@@ -26,11 +25,12 @@
     <label for="disability">Disablity</label>
     <input type="text" name="disability"><br />
 
-    <label for="medical_offer">Medical Offer</label>
-    <input type="text" name="medical_offer"><br />
+    <label for="medical_specialization">Medical Specialization</label>
+    <input type="text" name="medical_specialization"><br />
 
     <button type="submit">Submit</button>
 
+
 </form>
-<a href="/patients">Back to patients</a>
+<a href="/doctors">Back to doctors</a>
 {% endblock %}

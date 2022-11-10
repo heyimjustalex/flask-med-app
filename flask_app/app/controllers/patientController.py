@@ -5,16 +5,6 @@ from sqlalchemy import asc
 
 
 def patients():
-    patients = Patient.query.order_by(asc("id"))
-    return render_template("index.html", patients=patients)
-
-
-def patient(id):
-    patient = Patient.query.get_or_404(id)
-    return render_template("patient.html", patient=patient)
-
-
-def patient_add():
     if request.method == "POST":
         pesel = request.form["pesel"]
         name = request.form["name"]
@@ -41,7 +31,17 @@ def patient_add():
 
         return redirect(url_for("blueprint.patients"))
     else:
-        return render_template("add_patient.html")
+        patients = Patient.query.order_by(asc("id"))
+        return render_template("patients.html", patients=patients)
+
+
+def patient(id):
+    patient = Patient.query.get_or_404(id)
+    return render_template("patient.html", patient=patient)
+
+
+def patient_add():
+    return render_template("add_patient.html")
 
 
 def patient_edit(id):
@@ -68,7 +68,7 @@ def patient_edit(id):
         phone_num = (
             request.form["phone_num"]
             if request.form["phone_num"] != ""
-            else patient.phone_Num
+            else patient.phone_num
         )
         born = request.form["born"] if request.form["born"] != "" else patient.born
         address = (
