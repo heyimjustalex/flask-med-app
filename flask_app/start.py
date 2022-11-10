@@ -9,16 +9,154 @@ from app.models.Patient import Patient
 from app.models.Doctor import Doctor
 from app.models.Medical_interview import Medical_interview
 from datetime import datetime
-
 from app.routes.routes import blueprint
+import pandas as pd
 
 
-def setup_database():
+def load_data_from_csv():
+    print("START LOADINAAAAAAAAAAAAAAa")
+    doctors_csv = pd.read_csv(r"./sample_data/doctors.csv", delimiter=";")
+    global doctors_df
+    doctors_df = pd.DataFrame(
+        doctors_csv,
+        columns=[
+            "pesel",
+            "name",
+            "surname",
+            "email",
+            "phone_num",
+            "born",
+            "address",
+            "disability",
+            "medical_specialization",
+        ],
+    )
+
+    patients_csv = pd.read_csv(r"./sample_data/patients.csv", delimiter=";")
+    global patients_df
+    patients_df = pd.DataFrame(
+        patients_csv,
+        columns=[
+            "pesel",
+            "name",
+            "surname",
+            "email",
+            "phone_num",
+            "born",
+            "address",
+            "disability",
+            "medical_offer",
+        ],
+    )
+
+    medical_interviews_csv = pd.read_csv(
+        r"./sample_data/medicalInterviews.csv", delimiter=";"
+    )
+    global medical_interviews_df
+    medical_interviews_df = pd.DataFrame(
+        medical_interviews_csv,
+        columns=[
+            "id_meeting",
+            "hygiene",
+            "treatment_story",
+            "email",
+            "interview_description",
+        ],
+    )
+
+    meetings_csv = pd.read_csv(r"./sample_data/meetings.csv", delimiter=";")
+    global meetings_df
+    meetings_df = pd.DataFrame(
+        meetings_csv,
+        columns=["id_doctor", "id_patient", "meeting_time", "meeting_description"],
+    )
+
+    print(doctors_df)
+    print(patients_df)
+    print(medical_interviews_df)
+    print(meetings_df)
+
+    print("STOP LOADINGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+
+
+def create_db_schema():
     with app.app_context():
         db.drop_all()
     with app.app_context():
         db.create_all()
         db.session.commit()
+
+
+def load_doctors_to_database_from_global_df():
+    with app.app_context():
+        for index, row in doctors_df.iterrows():
+            db.session.add(
+                Doctor(
+                    pesel=row["pesel"],
+                    name=row["name"],
+                    surname=row["surname"],
+                    email=row["email"],
+                    phone_num=row["phone_num"],
+                    born=datetime.strptime(str(row["born"]), "%b %d %Y"),
+                    address=row["address"],
+                    disablity=bool(row["disability"]),
+                    medical_specialization=row["medical_specialization"],
+                )
+            )
+        db.session.commit()
+
+
+def load_patients_to_database_from_global_df():
+    with app.app_context():
+        for index, row in patients_df.iterrows():
+            db.session.add(
+                Patient(
+                    pesel=row["pesel"],
+                    name=row["name"],
+                    surname=row["surname"],
+                    email=row["email"],
+                    phone_num=row["phone_num"],
+                    born=datetime.strptime(str(row["born"]), "%b %d %Y"),
+                    address=row["address"],
+                    disablity=bool(row["disability"]),
+                    medical_offer=row["medical_offer"],
+                )
+            )
+        db.session.commit()
+
+
+def load_meetings_to_database_from_global_df():
+    with app.app_context():
+        for index, row in meetings_df.iterrows():
+            db.session.add(
+                Meeting(
+                    id_doctor=row["id_doctor"],
+                    id_patient=row["id_patient"],
+                    meeting_time=datetime.strptime(
+                        str(row["meeting_time"]), "%b %d %Y %I:%M%p"
+                    ),
+                    meeting_description=row["meeting_description"],
+                )
+            )
+        db.session.commit()
+
+
+def load_medical_interviews_to_database_from_global_df():
+    with app.app_context():
+        for index, row in medical_interviews_df.iterrows():
+            db.session.add(
+                Medical_interview(
+                    id_meeting=row["id_meeting"],
+                    hygiene=row["hygiene"],
+                    treatment_story=row["treatment_story"],
+                    interview_description=row["interview_description"],
+                )
+            )
+        db.session.commit()
+
+
+def setup_database_and_load_small_data():
+
     with app.app_context():
 
         db.session.add(
@@ -185,8 +323,13 @@ app.config.from_object("app.config.Config")
 db.init_app(app)
 app.register_blueprint(blueprint, url_prefix="/")
 migrate = Migrate(app, db)
-setup_database()
-
+load_data_from_csv()
+create_db_schema()
+load_doctors_to_database_from_global_df()
+load_patients_to_database_from_global_df()
+load_meetings_to_database_from_global_df()
+load_medical_interviews_to_database_from_global_df()
+# setup_database_and_load_small_data()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

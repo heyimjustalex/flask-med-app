@@ -4,7 +4,7 @@ from app.database.database import db
 from sqlalchemy import asc
 
 
-ROWS_PER_PAGE = 2
+ROWS_PER_PAGE = 500
 
 
 def patients():

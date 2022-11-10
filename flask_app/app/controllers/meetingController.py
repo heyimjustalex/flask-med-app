@@ -6,7 +6,7 @@ from app.models.Medical_interview import Medical_interview
 from app.database.database import db
 from sqlalchemy import asc
 
-ROWS_PER_PAGE = 2
+ROWS_PER_PAGE = 50
 
 
 def meetings():

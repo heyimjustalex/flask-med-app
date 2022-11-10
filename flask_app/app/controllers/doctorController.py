@@ -3,7 +3,7 @@ from app.models.Doctor import Doctor
 from app.database.database import db
 from sqlalchemy import asc
 
-ROWS_PER_PAGE = 2
+ROWS_PER_PAGE = 100
 
 
 def doctors():

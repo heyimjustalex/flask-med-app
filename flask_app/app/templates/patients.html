@@ -17,19 +17,18 @@
 
 
     <div>
-        <a href="{{ url_for('blueprint.patients', page=patients.prev_num) }}" class=" 
-        {% if patients.page == 1 %}disabled{% endif %}"> &laquo;</a>
+        <a href="{{ url_for('blueprint.patients', page=patients.prev_num) }}"> &laquo;</a>
 
         </a>
-        {% for page_num in patients.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% for page_num in patients.iter_pages(left_edge=0, right_edge=0, left_current=4, right_current=4) %}
 
         <a href="{{ url_for('blueprint.patients', page=page_num) }}">
             {{ page_num }}
         </a>
 
 
-        {% endfor %} <a href="{{ url_for('blueprint.patients', page=patients.next_num) }}"
-            class="{% if patients.page == patients.pages %}disabled{% endif %}">
+        {% endfor %}
+        <a href="{{ url_for('blueprint.patients', page=patients.next_num) }}">
 
             &raquo;
         </a>
