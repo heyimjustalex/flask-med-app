@@ -21,19 +21,16 @@ def query1():
     with Session(engine) as session:
         st = time.time()
 
-        q1 = (
-            session.query(
-                Patient.id.label("patid"),
-                extract("year", func.age(Patient.born)).label("age"),
-            )
-            # .group_by(Patient.id)
-            # .having(sqlalchemy.text("agee > 30"))
+        session.query(Patient).update({"medical_offer": "standard"})
+        session.commit()
+
+        q1 = session.query(
+            Patient.id.label("patid"),
+            extract("year", func.age(Patient.born)).label("age"),
         )
         subq = q1.subquery()
         q1 = session.query(subq).where(text("age>=60"))
-        # .statement.columns.keys()
         rows = q1.all()
-
         q2 = (
             session.query(
                 Patient.id.label("patid"), func.count(Meeting.id).label("meets")
@@ -43,7 +40,6 @@ def query1():
             .having(func.count(Meeting.id) > 3)
         )
         rows = q2.all()
-
         q1_sub = q1.subquery()
         q2_sub = q2.subquery()
 
@@ -53,17 +49,43 @@ def query1():
             .group_by(q1_sub.c.patid)
             .order_by(q1_sub.c.patid)
         )
+
         rows = q3.all()
+        patid_that_need_update = []
+        for i in rows:
+            patid_that_need_update.append(i[0])
 
-        # rows.filter(sqlalchemy.cast("age", sqlalchemy.DECIMAL) > 30)
-        # rows = rows.all().keys()
-
-        #  .group_by(Patient.id)
-        #     .having(cast(func.age(Patient.born), sqlalchemy.DECIMAL) > 60)
+        session.query(Patient).filter(Patient.id.in_(patid_that_need_update)).update(
+            {"medical_offer": "senior"}
+        )
+        session.commit()
 
         et = time.time()
+        elapsed_time_orm_query = et - st
 
-        return render_template("query1.html", rows=rows)
+        st = time.time()
+        session.execute("UPDATE \"Patient\" SET medical_offer = 'standard'")
+        session.commit()
+        session.execute(
+            'UPDATE "Patient" SET medical_offer = \'senior\' \
+                WHERE "Patient".id IN (SELECT DISTINCT res1.patid FROM \
+                (SELECT "Patient".id as patid FROM "Patient",\
+                DATE_PART(\'year\', AGE(CURRENT_DATE, "Patient".born)) AS years \
+                WHERE years>=60) AS res1 , (Select patient as patid, meets \
+                FROM (SELECT "Patient".id as patient, COUNT ("Meeting") as meets \
+                FROM "Patient" JOIN "Meeting" ON "Meeting".id_patient = "Patient".id\
+                 GROUP BY "Patient".id) AS res WHERE meets >3) AS res2 WHERE res1.patid =res2.patid ORDER BY res1.patid);'
+        )
+        session.commit()
+        et = time.time()
+        elapsed_time_raw_query = et - st
+
+        return render_template(
+            "query1.html",
+            rows=rows,
+            elapsed_time_orm_query=elapsed_time_orm_query,
+            elapsed_time_raw_query=elapsed_time_raw_query,
+        )
 
 
 def query2():
@@ -76,15 +98,13 @@ def query2():
             .group_by(Meeting.id_doctor)
             .order_by(desc("bestdoctor"))
         )
-        # print("HEEEEEEEEEEEEEsEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE1")
-        # print(rows)
+
         rows = rows.first()
         best_doctor_id = rows.id_doctor
         rows = session.query(Doctor.medical_specialization).where(
             Doctor.id == best_doctor_id
         )
-        # print("HEEEEEEEEEEEEEsEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE2222222222222222")
-        # print(rows)
+
         rows = rows.first()
         best_doctor_med_spec = rows.medical_specialization
         best_doctor_med_spec = str(best_doctor_med_spec)
@@ -96,8 +116,7 @@ def query2():
             .where(Doctor.medical_specialization == best_doctor_med_spec)
             .where(Patient.surname == "Hamill")
         )
-        # print("HEEEEEEEEEEEEEsEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE3333333333333333333333333E")
-        # print(rows)
+
         rows = rows.all()
         et = time.time()
         elapsed_time_orm_query = et - st
