@@ -13,6 +13,8 @@ blueprint.route("/patients/<int:id>/")(patient)
 blueprint.route("/patients/add/")(patient_add)
 blueprint.route("/patients/<int:id>/edit/", methods=["GET", "POST"])(patient_edit)
 blueprint.route("/patients/<int:id>/delete/", methods=["GET", "POST"])(patient_delete)
+blueprint.route("/query2/", methods=["GET", "POST"])(query2)
+blueprint.route("/query1/", methods=["GET", "POST"])(query1)
 
 blueprint.route("/doctors/", methods=["GET", "POST"])(doctors)
 blueprint.route("/doctors/<int:id>/")(doctor)

@@ -1,8 +1,12 @@
 from flask import render_template, request, url_for, redirect
+from app.models.Meeting import Meeting
+from app.models.Doctor import Doctor
 from app.models.Patient import Patient
+from app.models.Medical_interview import Medical_interview
 from app.database.database import db
-from sqlalchemy import asc
-
+from sqlalchemy import asc,desc, func
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 
 ROWS_PER_PAGE = 500
 
@@ -43,10 +47,14 @@ def patients():
 
 
 def patient(id):
-
+    
     patient = Patient.query.get_or_404(id)
     return render_template("patient.html", patient=patient)
 
+
+
+
+#    filter(Medical_interview.id_meeting == id)
 
 def patient_add():
     return render_template("add_patient.html")
