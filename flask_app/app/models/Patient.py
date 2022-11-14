@@ -14,7 +14,7 @@ class Patient(db.Model):
     address = db.Column(db.String(128), unique=False, nullable=True)
     disability = db.Column(db.Boolean, unique=False, nullable=True)
     medical_offer = db.Column(db.String(128), unique=False, nullable=True)
-    meetings = relationship("Meeting")
+    meetings = relationship("Meeting", lazy='select')
 
     def __init__(
         self,

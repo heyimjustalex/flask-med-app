@@ -10,7 +10,7 @@ class Meeting(db.Model):
     id_patient = db.Column(db.Integer, db.ForeignKey("Patient.id"))
     meeting_time = db.Column(db.DateTime, unique=False, nullable=True)
     meeting_description = db.Column(db.String(350), unique=False, nullable=True)
-    interviews = relationship("Medical_interview")
+    interviews = relationship("Medical_interview", lazy='select')
 
     def __init__(self, id_doctor, id_patient, meeting_time, meeting_description):
         self.id_doctor = id_doctor
