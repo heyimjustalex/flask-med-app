@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 import sqlalchemy
 import time
 
-engine = create_engine("postgresql://flaskapp:flaskapp@db:5432/flaskapp")
+engine = create_engine("postgresql://flaskapp:flaskapp@db:5432/flaskapp", echo=True)
 
 
 def index():
