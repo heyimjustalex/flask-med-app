@@ -22,5 +22,5 @@ RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 WORKDIR /flask_app
 # Copy the content of the local src directory to the working directory
-
+# RUN flask db init
 CMD [ "python3","start.py" ]

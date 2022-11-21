@@ -6,7 +6,7 @@ services:
     command: python3 /flask_app/start.py
     container_name: flask_app
     volumes:
-      - ./flask_app/app:/flask_app/app
+      - ./flask_app:/flask_app
     environment:
       FLASK_DEBUG: 1
       FLASK_APP: ./flask_app/start.py
